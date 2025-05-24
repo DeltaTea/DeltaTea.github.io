@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cyberlink</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="terminal.css">
+
+</head>
+<body>
+  <div class="panel links">
+    <div class="title">/links</div>
+	<a href="https://www.x.com/Delta_Tea_">> twitter</a>
+	<a href="https://www.twitch.tv/delta_tea_">> twitch</a>
+	<a href="https://www.youtube.com/@Delta_Tea">> youtube</a>
+	<a href="https://delta-tea.itch.io/">> itch.io</a>
+	<a href="https://github.com/DeltaTea">> github</a>
+  </div>
+
+  <div class="panel about-panel about">
+    <div class="title">/about</div>
+    <p class="typed" id="typed-text"></p>
+  </div>
+
+  <div class="panel status-panel">
+    <div class="title">/console</div>
+    <div id="scrolling-text"></div>
+    <div id="console-line">
+      <span>&gt;</span><input id="console-input" type="text" autocomplete="off"  />
+    </div>
+  </div>
+
+  <script>
+	  
+	const commands = {
+		help: 'HELP HELP HELP HELP',
+		status: 'System nominal. Uplink stable. Residual entropy: minimal.',
+		rickroll: 'https://www.youtube.com/watch?v=E4WlUXrJgy4',
+		cd: 'The system cannot find the path specified.',
+		ls: 'Error: file corrupt',
+	};
+		
+		
+	// Array of objects with optional delay, color, and sameLine parameters
+	//{ text: "Hello World!", sameLine: true, color: "blue", delay = 1000 }
+	const initText = [
+		{text: "", delay: 1000},
+		{text: "INITIATING OMEGA TERMINAL SESSION..."},
+		{text: "> ssh delta@734.15.13.37"},
+		{text: "  delta@734.15.13.37's password: "},
+		{text: "*",sameLine: true, delay: 100},
+		{text: "*",sameLine: true, delay: 100},
+		{text: "*",sameLine: true, delay: 100},
+		{text: "*",sameLine: true, delay: 100},
+		{text: "*",sameLine: true, delay: 100},
+		{text: "Starting Quantum Tunneling"},
+		{text: "", delay: 20},
+		{text: "  █ ", delay: 1500},
+		{text: "█ ",sameLine: true, delay: 1000},
+		{text: "█ ",sameLine: true, delay: 500},
+		{text: "█ ",sameLine: true, delay: 500},
+		{text: "█ ",sameLine: true, delay: 500},
+		{text: "█ ",sameLine: true, delay: 200},
+		{text: "█ ",sameLine: true, delay: 100},
+		{text: "█ ",sameLine: true, delay: 100},
+		{text: "█ ",sameLine: true, delay: 100},
+		{text: "█ ",sameLine: true, delay: 100},
+		{text: "", delay: 500},
+		{text: " Alligned QPUs", color: "red"},
+		{text: " CONNECTION STATUS:"},
+		{text: "ONLINE", sameLine: true},
+		{text: "Welcome Δ!"},
+
+
+	];
+	
+	var textData = initText
+	
+	let i = 0;
+		function scrollText() {
+			const container = document.getElementById('scrolling-text');
+			if (i < textData.length) {
+				const { text, delay = 1000, color, sameLine = false } = textData[i];
+				if (!sameLine){
+					container.appendChild(document.createElement('br'));
+				}
+				if (color){
+					const span = document.createElement('span');
+					span.style.color = color;
+					span.textContent = text;
+					container.appendChild(span);
+				}else{
+					// Create a text node and append it
+					const textNode = document.createTextNode(text);
+					container.appendChild(textNode);
+				}
+			setTimeout(scrollText, delay);
+			i++;
+			} else {
+				document.getElementById('console-input').focus();
+			}
+		}
+
+    scrollText();
+
+    const aboutText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.";
+    const typedEl = document.getElementById('typed-text');
+    let j = 0;
+
+    function typeWriter() {
+      if (j < aboutText.length) {
+        typedEl.textContent += aboutText.charAt(j);
+        j++;
+        setTimeout(typeWriter, 25);
+      }
+    }
+
+    typeWriter();
+
+    const input = document.getElementById('console-input');
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        
+		const userInput = input.value.trim()
+		const cmd = input.value.trim().split(" ")[0];
+        const output = document.createElement('div');
+		const inyput = document.createElement('div');
+        if (cmd in commands) {
+          output.textContent = commands[cmd];
+        } else {
+          output.textContent = `Error: '${cmd}' is not a valid command.`;
+        }
+        inyput.textContent = `> ${userInput}`;
+		document.getElementById('scrolling-text').appendChild(inyput);
+		document.getElementById('scrolling-text').appendChild(output);
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
